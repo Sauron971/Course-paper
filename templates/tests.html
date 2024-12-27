@@ -102,6 +102,43 @@
 						<button type="submit" class="btn btn-success">Отправить</button>
 					</form>
 				</div>
+				<div class="testContainer {{'active' if test == '2' else 'tab' }}">
+					<h1>Тест 2</h1>
+					<form method="post">
+					{% for component in test2 %}
+
+							<div>
+								<p style="margin-bottom: 0;"><b>Вопрос {{component.i}}:</b> {{component.question}}</p>
+							</div>
+							<div class="answersContainer">
+								{% for quest in component.options %}
+									<input type="radio" id="answer_{{component.i}}" name="answer_{{component.i}}" value="{{quest}}"> {{quest}}
+								{% endfor %}
+							</div>
+
+					{% endfor %}
+						<button type="submit" class="btn btn-success">Отправить</button>
+					</form>
+				</div>
+				<div class="testContainer {{'active' if test == '3' else 'tab' }}">
+					<h1>Тест 3</h1>
+					<form method="post">
+					{% for component in test3 %}
+
+							<div>
+								<p style="margin-bottom: 0;"><b>Вопрос {{component.i}}:</b> {{component.question}}</p>
+							</div>
+							<div class="answersContainer">
+								{% for quest in component.options %}
+									<input type="radio" id="answer_{{component.i}}" name="answer_{{component.i}}" value="{{quest}}"> {{quest}}
+								{% endfor %}
+							</div>
+
+					{% endfor %}
+						<button type="submit" class="btn btn-success">Отправить</button>
+					</form>
+				</div>
+
 			</div>
 		</tests>
 		

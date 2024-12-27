@@ -10,9 +10,6 @@ app = Flask(__name__)
 app.secret_key = 'myBoY'
 
 
-# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
-
-
 def read_file(path):
     with open(path, 'r', encoding="utf-8") as f:
         text = f.read()
@@ -125,21 +122,33 @@ def practicate():
 def tests():
     tab = request.args.get('test', '')
     test1 = getQuestions(read_file("static/tests/test1.txt"))
+    test2 = getQuestions(read_file("static/tests/test2.txt"))
+    test3 = getQuestions(read_file("static/tests/test3.txt"))
     if request.method == 'POST':
         user_answers = request.form  # Получаем данные формы в словаре
         score = 0
         count_questions = 0
-        for component in test1:
-            question_number = component['i']
-            correct_answer = component['correct_answer']
-            user_answer = user_answers.get(f'answer_{question_number}')
-            count_questions += 1
-            if user_answer == correct_answer:
-                score += 1
-        score = (score / count_questions) * 100
-        return render_template('tests.html', test=tab, score=score, test1=test1)
+        current_test = -1
+        if tab == "1":
+            current_test = test1
+        elif tab == "2":
+            current_test = test2
+        elif tab == "3":
+            current_test = test3
+        if current_test != -1:
+            for component in current_test:
+                question_number = component['i']
+                correct_answer = component['correct_answer']
+                user_answer = user_answers.get(f'answer_{question_number}')
+                count_questions += 1
+                print(f"{user_answer} == {correct_answer}")
+                if user_answer == correct_answer:
+                    score += 1
+            score = (score / count_questions) * 100
 
-    return render_template('tests.html', test=tab, test1=test1)
+            return render_template('tests.html', test=tab, score=score, test1=test1, test2=test2, test3=test3)
+
+    return render_template('tests.html', test=tab, test1=test1, test2=test2, test3=test3)
 
 
 def get_users():
@@ -231,13 +240,13 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/download')
-def download_file():
-    # path = "D:\programms\openserver\domains\localhost\static\images\privet.png"
-    # count = read_file()
-    # count = int(count) + 1
-    # write_file(str(count))
-    return send_file(path, as_attachment=True)
+# @app.route('/download')
+# def download_file():
+# path = "D:\programms\openserver\domains\localhost\static\images\privet.png"
+# count = read_file()
+# count = int(count) + 1
+# write_file(str(count))
+# return send_file(path, as_attachment=True)
 
 
 @app.errorhandler(404)
