@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="btn btn-light navbtn" href="admin?tab=test">
+                    <a class="btn btn-light navbtn" href="admin?tab=tests">
                         📋Тесты
                     </a>
                 </li>
@@ -66,7 +66,8 @@
         <h1>Аккаунты:</h1>
         <div style="display: flex; flex-direction:row">
             <div style="flex:1">
-                <div class="accordion accordion-flush shadow p-3 mb-5 bg-body-tertiary rounded" style="--bs-accordion-btn-bg: #C0C0C0"  id="accordionFlush">
+                <div class="accordion accordion-flush shadow p-3 mb-5 bg-body-tertiary rounded"
+                     style="--bs-accordion-btn-bg: #C0C0C0" id="accordionFlush">
                     {% for components in accounts %}
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-heading{{ components.id }}">
@@ -88,11 +89,13 @@
                                     </div>
                                     <div class="bodyItem">
                                         <label for="password">Новый пароль:</label>
-                                        <input type="text" class="form-control" id="password" name="password" value="{{ components.password }}">
+                                        <input type="text" class="form-control" id="password" name="password"
+                                               value="{{ components.password }}">
                                     </div>
                                     <div class="bodyItem">
                                         <label for="admin">Админ:</label>
-                                        <input type="checkbox" class="form-check-input" id="admin" name="admin" value="1" {% if components.admin==1
+                                        <input type="checkbox" class="form-check-input" id="admin" name="admin"
+                                               value="1" {% if components.admin==1
                                                %}checked{% endif %}>
                                     </div>
                                     <button type="submit" class="btn btn-dark">Изменить</button>
@@ -114,14 +117,18 @@
                             <label for="newLogin">Логин</label>
                         </div>
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="newPassword" name="newPassword" placeholder="Пароль">
+                            <input type="text" class="form-control" id="newPassword" name="newPassword"
+                                   placeholder="Пароль">
                             <label for="newPassword">Пароль</label>
                         </div>
                         <div class="form-control mt-2">
                             <label for="newAdmin">Админ:</label>
                             <input type="checkbox" class="form-check-input" id="newAdmin" name="newAdmin" value="1">
                         </div>
-                        <button type="submit" class="btn btn-success w-100 {{ 'jump-shake' if values_error == 'create_user' else '' }}" style="margin-top:15px;  background-color: #dc3545">Создать</button>
+                        <button type="submit"
+                                class="btn btn-success w-100 {{ 'jump-shake' if values_error == 'create_user' else '' }}"
+                                style="margin-top:15px;">Создать
+                        </button>
                     </form>
                 </div>
             </div>
@@ -129,7 +136,7 @@
     </main>
 
     <main id="theories" class=" {{'active' if active_tab == 'theories' else 'tab' }} ">
-        <div class="theories">
+        <div class="navEduMaterial">
             <a class="btn btn-secondary" href="admin?tab=theories&theory=1">Лекция 1</a>
             <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=2">Лекция 2</a>
             <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=3">Лекция 3</a>
@@ -138,7 +145,7 @@
         </div>
         <form method="post">
             <input type="hidden" name="form_id" value="save_lectures">
-            <div class="editTheories">
+            <div class="editEduMaterial">
 					<textarea id="lectures" class="form-control" name="lectures">
 {{ theory }}
 					</textarea>
@@ -161,6 +168,73 @@
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
     </main>
+
+    <main id="labs" class=" {{'active' if active_tab == 'practicate' else 'tab' }} ">
+        <div class="navEduMaterial">
+            <a class="btn btn-secondary" href="admin?tab=practicate&lab=1">Лабораторная 1</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=practicate&lab=2">Лабораторная 2</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=practicate&lab=3">Лабораторная 3</a>
+        </div>
+        <form method="post">
+            <input type="hidden" name="form_id" value="save_labs">
+            <div class="editEduMaterial">
+					<textarea id="labs" class="form-control" name="labs">
+{{ lab }}
+					</textarea>
+                <div>
+                    <h1>Инструкция:</h1>
+                    <p>
+                        Слева находится полный текст практических работ с метками.
+                    </p>
+                    <p>
+                        После внесения нужных изменений нажмите на кнопку снизу чтобы сохранить.
+                    </p>
+                    <p>
+                        <b>Метки:</b> <br>## - загаловок первого уровня; <br>### - заголовок второго уровня.
+                    </p>
+                    <p>
+                        Помечайте те строки которые должны быть выделены на странице.
+                    </p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </main>
+
+    <main id="tests" class=" {{'active' if active_tab == 'tests' else 'tab' }} ">
+        <div class="navEduMaterial">
+            <a class="btn btn-secondary" href="admin?tab=tests&test=1">Тест 1</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=tests&test=2">Тест 2</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=tests&test=3">Тест 3</a>
+        </div>
+        <form method="post">
+            <input type="hidden" name="form_id" value="save_tests">
+            <div class="editEduMaterial">
+					<textarea id="test" class="form-control" name="test">
+{{ test }}
+					</textarea>
+                <div>
+                    <h1>Инструкция:</h1>
+                    <p>
+                        Слева находится полный текст тестов, в особом видео.
+                    </p>
+                    <p>
+                        После внесения нужных изменений нажмите на кнопку снизу чтобы сохранить.
+                    </p>
+                    <p>
+                        <b>Важно:</b> <br>в первой строке сначала идет номер вопроса, а после пробела сам вопрос; <br>ниже этой строки идут варианты ответов разделяемые с помощью символа |; <br>символом * помечается правильный вариант ответа
+                    </p>
+                    <p class="border">
+                        <b>Пример:</b><br>
+                        1 Сколько пальцев на руке?<br>
+                        1|2|3|4|*5
+                    </p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </main>
+
     <footer>
         <p>&copy; 2024 Учебный проект студента гр. ИП-122 Гребнева Павла</p>
     </footer>

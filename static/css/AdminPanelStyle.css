@@ -49,7 +49,7 @@ nav ul li {
 .btn {
 	transition: .3s;
 }
-.btn:hover {
+nav .btn:hover {
 	transform: translateY(-3.5px);
 	box-shadow: 0 0px 30px rgba(255, 255, 255, .1);
 }
@@ -84,21 +84,21 @@ main {
 .intro {
 	text-align: center;
 }
-.theories {
+.navEduMaterial {
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 20px;
 }
-.editTheories {
+.editEduMaterial {
 	display: flex;
 	flex-direction: row;
 	padding-bottom: 10px;
 }
-.editTheories div {
+.editEduMaterial div {
 	margin-left: 20px;
 	text-align: left;
 }
-.editTheories h1 {
+.editEduMaterial h1 {
 	font-size: 30px;
 	font-weight: 530;
 }
@@ -124,9 +124,9 @@ footer {
 @keyframes jump-shaking {
   0% { transform: translateX(0); background-color: #dc3545}
   25% { transform: translateY(-9px); background-color: #dc3545 }
-  35% { transform: translateY(-9px) rotate(17deg); background-color: #dc3545 }
-  55% { transform: translateY(-9px) rotate(-17deg); background-color: #dc3545 }
-  65% { transform: translateY(-9px) rotate(17deg); background-color: #dc3545 }
-  75% { transform: translateY(-9px) rotate(-17deg); background-color: #dc3545 }
+  35% { transform: translateY(-9px) rotate(5deg); background-color: #dc3545 }
+  55% { transform: translateY(-9px) rotate(-5deg); background-color: #dc3545 }
+  65% { transform: translateY(-9px) rotate(5deg); background-color: #dc3545 }
+  75% { transform: translateY(-9px) rotate(-5deg); background-color: #dc3545 }
   100% { transform: translateY(0) rotate(0); background-color: #dc3545 }
 }

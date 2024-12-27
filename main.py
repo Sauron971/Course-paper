@@ -1,13 +1,36 @@
-from flask import Flask, render_template, request, send_file, redirect, url_for, session
-from myDb import get_db_connection, createUser, createTables
 import hashlib
 import re
-import datetime
-import logging
+
+from flask import Flask, render_template, request, redirect, url_for, session, abort
+
+from myDb import get_db_connection, createUser
 
 app = Flask(__name__)
 
 app.secret_key = 'myBoY'
+PATH_EDU_MATERIAL = [
+    "static/theories/theory",
+    "static/practicate/practicate",
+    "static/tests/test"
+]
+
+
+# region Здесь функции для упрощения
+def get_path_edu_material(index, indexOfMat):
+    return PATH_EDU_MATERIAL[index] + f"{indexOfMat}.txt"
+
+
+def read_edu_material(index, indexOfMat):
+    if indexOfMat == '': return ""
+    path = get_path_edu_material(index, indexOfMat)
+    return read_file(path)
+
+
+def write_edu_material(index, indexOfMat, text):
+    if indexOfMat == '': return ""
+    path = get_path_edu_material(index, indexOfMat)
+    write_file(path, text)
+    return
 
 
 def read_file(path):
@@ -21,7 +44,7 @@ def write_file(path, string):
         f.write(string.replace('\r\n', '\n'))
 
 
-def getTextAsComponents(text):
+def get_text_as_components(text):
     components = []
     while len(text) > 0:
         # Найти индекс первой новой строки
@@ -46,7 +69,7 @@ def getTextAsComponents(text):
     return components
 
 
-def getQuestions(text):
+def get_questions_as_components(text):
     questions = []
     lines = text.strip().split('\n')
     i = 0
@@ -89,21 +112,39 @@ def getQuestions(text):
     return questions
 
 
+def get_users():
+    conn = get_db_connection()
+    usersDb = conn.execute('SELECT * FROM users').fetchall()  # Получаем все записи
+    conn.close()
+
+    # Обработка данных
+    users = []
+    for user in usersDb:
+        user_data = {
+            'id': user[0],
+            'login': user[1],
+            # 'password': user[2],
+            'admin': user[3]
+        }
+        users.append(user_data)
+
+    return users
+# endregion
+
+
+# region Events for processing user actions
 @app.route('/', methods=["GET", "POST"])
 def index():
-    # count = read_file()
-    # return render_template('main.html', count=count) передача переменных
-
     return render_template('main.html')
 
 
 @app.route('/theory', methods=["GET", "POST"])
 def theory():
-    theory1 = getTextAsComponents(read_file("static/theories/theory1.txt"))
-    theory2 = getTextAsComponents(read_file("static/theories/theory2.txt"))
-    theory3 = getTextAsComponents(read_file("static/theories/theory3.txt"))
-    theory4 = getTextAsComponents(read_file("static/theories/theory4.txt"))
-    theory5 = getTextAsComponents(read_file("static/theories/theory5.txt"))
+    theory1 = get_text_as_components(read_file(get_path_edu_material(0, 1)))
+    theory2 = get_text_as_components(read_file(get_path_edu_material(0, 2)))
+    theory3 = get_text_as_components(read_file(get_path_edu_material(0, 3)))
+    theory4 = get_text_as_components(read_file(get_path_edu_material(0, 4)))
+    theory5 = get_text_as_components(read_file(get_path_edu_material(0, 5)))
 
     return render_template('theory.html', theory1=theory1, theory2=theory2, theory3=theory3, theory4=theory4,
                            theory5=theory5)
@@ -111,9 +152,9 @@ def theory():
 
 @app.route('/practicate', methods=["GET", "POST"])
 def practicate():
-    lab1 = getTextAsComponents(read_file("static/practicate/practicate1.txt"))
-    lab2 = getTextAsComponents(read_file("static/practicate/practicate2.txt"))
-    lab3 = getTextAsComponents(read_file("static/practicate/practicate3.txt"))
+    lab1 = get_text_as_components(read_file(get_path_edu_material(1, 1)))
+    lab2 = get_text_as_components(read_file(get_path_edu_material(1, 2)))
+    lab3 = get_text_as_components(read_file(get_path_edu_material(1, 3)))
 
     return render_template('practicate.html', pract1=lab1, pract2=lab2, pract3=lab3)
 
@@ -121,9 +162,9 @@ def practicate():
 @app.route('/tests', methods=["GET", "POST"])
 def tests():
     tab = request.args.get('test', '')
-    test1 = getQuestions(read_file("static/tests/test1.txt"))
-    test2 = getQuestions(read_file("static/tests/test2.txt"))
-    test3 = getQuestions(read_file("static/tests/test3.txt"))
+    test1 = get_questions_as_components(read_file(get_path_edu_material(2, 1)))
+    test2 = get_questions_as_components(read_file(get_path_edu_material(2, 2)))
+    test3 = get_questions_as_components(read_file(get_path_edu_material(2, 3)))
     if request.method == 'POST':
         user_answers = request.form  # Получаем данные формы в словаре
         score = 0
@@ -151,42 +192,10 @@ def tests():
     return render_template('tests.html', test=tab, test1=test1, test2=test2, test3=test3)
 
 
-def get_users():
-    conn = get_db_connection()
-    usersDb = conn.execute('SELECT * FROM users').fetchall()  # Получаем все записи
-    conn.close()
-
-    # Обработка данных
-    users = []
-    for user in usersDb:
-        user_data = {
-            'id': user[0],
-            'login': user[1],
-            # 'password': user[2],
-            'admin': user[3]
-        }
-        users.append(user_data)
-
-    return users
-
-
-def readTheory(index):
-    if index == '': return ""
-    path = f"static/theories/theory{index}.txt"
-    return read_file(path)
-
-
-def writeTheory(index, text):
-    if index == '': return ""
-    path = f"static/theories/theory{index}.txt"
-    write_file(path, text)
-    return
-
-
 @app.route('/admin', methods=["GET", "POST"])
 def admin_panel():
-    if not session['admin']:
-        return
+    if not session.get('admin'):
+        abort(404)
     if request.method == 'POST':
         action = request.form.get('form_id')
         if action == 'save_user':
@@ -200,7 +209,7 @@ def admin_panel():
                 conn.execute('UPDATE users SET admin = ? WHERE username = ?', (admin, login,)).fetchone()
             else:
                 conn.execute('UPDATE users SET password = ?, admin = ? WHERE username = ?',
-                                          (newpassword, admin, login,)).fetchone()
+                             (newpassword, admin, login,)).fetchone()
             conn.commit()
             conn.close()
         elif action == 'create_user':
@@ -208,20 +217,34 @@ def admin_panel():
             password = request.form.get('newPassword')
             admin = request.form.get('newAdmin', '0')
             if login == "" or password == "":
-                return render_template('admin_panel.html', values_error='create_user', active_tab='accounts', accounts=get_users())
+                return render_template('admin_panel.html', values_error='create_user', active_tab='accounts',
+                                       accounts=get_users())
             createUser(login, password, admin)
 
         elif action == 'save_lectures':
             index = request.args.get('theory', '')
-            theory = request.form.get('lectures')
-            writeTheory(index, theory)
+            text = request.form.get('lectures')
+            write_edu_material(0, index, text)
 
+        elif action == 'save_labs':
+            index = request.args.get('lab', '')
+            text = request.form.get('labs')
+            write_edu_material(1, index, text)
+
+        elif action == 'save_tests':
+            index = request.args.get('test', '')
+            text = request.form.get('test')
+            write_edu_material(2, index, text)
 
     tab = request.args.get('tab', 'intro')
     theory = request.args.get('theory', '')
-    theory = readTheory(theory)
+    theory = read_edu_material(0, theory)
+    lab = request.args.get('lab', '')
+    lab = read_edu_material(1, lab)
+    test = request.args.get('test', '')
+    test = read_edu_material(2, test)
 
-    return render_template('admin_panel.html', active_tab=tab, theory=theory, accounts=get_users())
+    return render_template('admin_panel.html', active_tab=tab, theory=theory, lab=lab, test=test, accounts=get_users())
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -251,19 +274,11 @@ def logout():
     return redirect(url_for('index'))
 
 
-# @app.route('/download')
-# def download_file():
-# path = "D:\programms\openserver\domains\localhost\static\images\privet.png"
-# count = read_file()
-# count = int(count) + 1
-# write_file(str(count))
-# return send_file(path, as_attachment=True)
-
-
 @app.errorhandler(404)
 def not_found(e):
     return render_template('404.html'), 404
+# endregion
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.1.34', port='80')
+    app.run(host='192.168.1.34', port=80)
