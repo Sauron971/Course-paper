@@ -185,26 +185,37 @@ def writeTheory(index, text):
 
 @app.route('/admin', methods=["GET", "POST"])
 def admin_panel():
+    if not session['admin']:
+        return
     if request.method == 'POST':
         action = request.form.get('form_id')
         if action == 'save_user':
             login = request.form.get('login')
             password = request.form['password']
             newpassword = hashlib.sha256(password.encode('utf-8')).hexdigest()
-            admin = request.form.get('admin', 'false')
+            admin = request.form.get('admin', '0')
 
             conn = get_db_connection()
             if password == "":
-                updateUser = conn.execute('UPDATE users SET admin = ? WHERE username = ?', (admin, login,)).fetchone()
+                conn.execute('UPDATE users SET admin = ? WHERE username = ?', (admin, login,)).fetchone()
             else:
-                updateUser = conn.execute('UPDATE users SET password = ?, admin = ? WHERE username = ?',
+                conn.execute('UPDATE users SET password = ?, admin = ? WHERE username = ?',
                                           (newpassword, admin, login,)).fetchone()
             conn.commit()
             conn.close()
+        elif action == 'create_user':
+            login = request.form.get('newLogin')
+            password = request.form.get('newPassword')
+            admin = request.form.get('newAdmin', '0')
+            if login == "" or password == "":
+                return render_template('admin_panel.html', values_error='create_user', active_tab='accounts', accounts=get_users())
+            createUser(login, password, admin)
+
         elif action == 'save_lectures':
             index = request.args.get('theory', '')
             theory = request.form.get('lectures')
             writeTheory(index, theory)
+
 
     tab = request.args.get('tab', 'intro')
     theory = request.args.get('theory', '')

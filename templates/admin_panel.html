@@ -4,135 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Электронный учебник по Unreal Engine 5</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/AdminPanelStyle.css">
-	<link rel="shortcut icon" href="../static/images/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="../static/images/favicon.png" type="image/png">
 </head>
 <body>
-    <div class="con">
-        <header>
-			<nav>
-				<ul>
-					<li>
-						<a class="btn btn-light navbtn" href="admin?tab=accounts">
-							👥Аккаунты
-						</a>
-					</li>
-					<li>
-						<a class="btn btn-light navbtn" href="admin?tab=theories">
-							📔Теории
-						</a>
-					</li>
-					<li>
-						<a class="btn btn-light navbtn" href="admin?tab=practicate">
-							💻Практика
-						</a>
-					</li>
-					<li>
-						<a class="btn btn-light navbtn" href="admin?tab=test">
-							📋Тесты
-						</a>
-					</li>
-				</ul>
-				<div class="login-button">
-					{% if session.username %}
-						<div class="dropdown">
-							<button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								👤{{session.username}}
-							</button>
-							<ul class="dropdown-menu">
-								{% if session.admin == true %}
-								<li><a class="dropdown-item" href="/">На главную</a></li>
-								{% endif %}
-								<li><a class="dropdown-item" href="logout">Выход</a></li>
-							</ul>
-						</div>
-					{% else %}
-						<a class="navbtn btn btn-light" href="login">Вход</a>
-					{% endif %}
-				</div>
-			</nav>
-		</header>
-			
-		<main id="intro" class=" {{ 'active' if active_tab == 'intro' else 'tab' }} ">
-			<section class="intro">
-				Админ панель здесь можно изменять аккаунты, текст теории, практики и тесты.
-			</section>
-		</main>
-			
-		<main id="accounts" class=" {{ 'active' if active_tab == 'accounts' else 'tab' }}">
-					<h1>Аккаунты:</h1>
-					<div class="accordion accordion-flush" id="accordionFlush">
-						{% for components in accounts %}
-						<div class="accordion-item">
-							<h2 class="accordion-header" id="flush-heading{{ components.id }}">
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ components.id }}" aria-expanded="false" aria-controls="flush-collapse{{ components.id }}">
-									{{ components.login }}
-								</button>
-							</h2>
-							<div id="flush-collapse{{ components.id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ components.id }}" data-bs-parent="#accordionFlush">
-								<div class="accordion-body">
-									<form method="POST">
-										<input type="hidden" name="form_id" value="save_user">
-										<input type="hidden" name="id" value="{{ components.id }}">
-										<div class="bodyItem" style="display: none">
-											<label>Логин:</label>
-											<input type="text" id="login" name="login" value="{{ components.login }}">
-										</div>
-										<div class="bodyItem">
-											<label>Новый пароль:</label>
-											<input type="text" id="password" name="password" value="{{ components.password }}">
-										</div>
-										<div class="bodyItem">
-											<label>Админ:</label>
-											<input type="checkbox" id="admin" name="admin" value="1" {% if components.admin==1 %}checked{% endif %}>
-										</div>
-										<button type="submit" class="btn btn-dark">Изменить</button>
-									</form>
-								</div>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
-				</main>
-			
-		<main id="theories" class=" {{'active' if active_tab == 'theories' else 'tab' }} ">
-			<div class="theories">
-				<a class="btn btn-secondary" href="admin?tab=theories&theory=1">Лекция 1</a>
-				<a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=2">Лекция 2</a>
-				<a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=3">Лекция 3</a>
-				<a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=4">Лекция 4</a>
-				<a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=5">Лекция 5</a>
-			</div>
-			<form method="post">
-				<input type="hidden" name="form_id" value="save_lectures">
-				<div class="editTheories">
+<div class="con">
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a class="btn btn-light navbtn" href="admin?tab=accounts">
+                        👥Аккаунты
+                    </a>
+                </li>
+                <li>
+                    <a class="btn btn-light navbtn" href="admin?tab=theories">
+                        📔Теории
+                    </a>
+                </li>
+                <li>
+                    <a class="btn btn-light navbtn" href="admin?tab=practicate">
+                        💻Практика
+                    </a>
+                </li>
+                <li>
+                    <a class="btn btn-light navbtn" href="admin?tab=test">
+                        📋Тесты
+                    </a>
+                </li>
+            </ul>
+            <div class="login-button">
+                {% if session.username %}
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        👤{{session.username}}
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% if session.admin == true %}
+                        <li><a class="dropdown-item" href="/">На главную</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="logout">Выход</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <a class="navbtn btn btn-light" href="login">Вход</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main id="intro" class=" {{ 'active' if active_tab == 'intro' else 'tab' }} ">
+        <section class="intro">
+            Админ панель здесь можно изменять аккаунты, текст теории, практики и тесты.
+        </section>
+    </main>
+
+    <main id="accounts" class=" {{ 'active' if active_tab == 'accounts' else 'tab' }}">
+        <h1>Аккаунты:</h1>
+        <div style="display: flex; flex-direction:row">
+            <div style="flex:1">
+                <div class="accordion accordion-flush shadow p-3 mb-5 bg-body-tertiary rounded" style="--bs-accordion-btn-bg: #C0C0C0"  id="accordionFlush">
+                    {% for components in accounts %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-heading{{ components.id }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapse{{ components.id }}" aria-expanded="false"
+                                    aria-controls="flush-collapse{{ components.id }}">
+                                {{ components.login }}
+                            </button>
+                        </h2>
+                        <div id="flush-collapse{{ components.id }}" class="accordion-collapse collapse"
+                             aria-labelledby="flush-heading{{ components.id }}" data-bs-parent="#accordionFlush">
+                            <div class="accordion-body">
+                                <form method="POST">
+                                    <input type="hidden" name="form_id" value="save_user">
+                                    <input type="hidden" name="id" value="{{ components.id }}">
+                                    <div class="bodyItem" style="display: none">
+                                        <label>Логин:</label>
+                                        <input type="text" id="login" name="login" value="{{ components.login }}">
+                                    </div>
+                                    <div class="bodyItem">
+                                        <label for="password">Новый пароль:</label>
+                                        <input type="text" class="form-control" id="password" name="password" value="{{ components.password }}">
+                                    </div>
+                                    <div class="bodyItem">
+                                        <label for="admin">Админ:</label>
+                                        <input type="checkbox" class="form-check-input" id="admin" name="admin" value="1" {% if components.admin==1
+                                               %}checked{% endif %}>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark">Изменить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div>
+                <div class="shadow p-3 mb-5 bg-body-tertiary rounded" style="padding:10px; margin-left:100px;">
+                    <form method="post">
+                        <input type="hidden" name="form_id" value="create_user">
+                        <h2 style="font-size:18px;">Создать новый аккаунт:</h2>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="newLogin" name="newLogin" placeholder="Логин">
+                            <label for="newLogin">Логин</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="newPassword" name="newPassword" placeholder="Пароль">
+                            <label for="newPassword">Пароль</label>
+                        </div>
+                        <div class="form-control mt-2">
+                            <label for="newAdmin">Админ:</label>
+                            <input type="checkbox" class="form-check-input" id="newAdmin" name="newAdmin" value="1">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 {{ 'jump-shake' if values_error == 'create_user' else '' }}" style="margin-top:15px;  background-color: #dc3545">Создать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="theories" class=" {{'active' if active_tab == 'theories' else 'tab' }} ">
+        <div class="theories">
+            <a class="btn btn-secondary" href="admin?tab=theories&theory=1">Лекция 1</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=2">Лекция 2</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=3">Лекция 3</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=4">Лекция 4</a>
+            <a class="btn btn-secondary" style="margin-left: 25px" href="admin?tab=theories&theory=5">Лекция 5</a>
+        </div>
+        <form method="post">
+            <input type="hidden" name="form_id" value="save_lectures">
+            <div class="editTheories">
 					<textarea id="lectures" class="form-control" name="lectures">
 {{ theory }}
 					</textarea>
-					<div>
-						<h1>Инструкция:</h1>
-						<p>
-							Слева находится полный текст теории с метками. 
-						</p>
-						<p>
-							После внесения нужных изменений нажмите на кнопку снизу чтобы сохранить.
-						</p>
-						<p>
-							<b>Метки:</b> <br>## - загаловок первого уровня; <br>### - заголовок второго уровня. 
-						</p>
-						<p>
-							Помечайте те строки которые должны быть выделены на странице.
-						</p>
-					</div>
-				</div>
-				<button type="submit" class="btn btn-success">Сохранить</button>
-			</form>
-		</main>
-        <footer>
-            <p>&copy; 2024 Учебный проект студента гр. ИП-122 Гребнева Павла</p>
-        </footer>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                <div>
+                    <h1>Инструкция:</h1>
+                    <p>
+                        Слева находится полный текст теории с метками.
+                    </p>
+                    <p>
+                        После внесения нужных изменений нажмите на кнопку снизу чтобы сохранить.
+                    </p>
+                    <p>
+                        <b>Метки:</b> <br>## - загаловок первого уровня; <br>### - заголовок второго уровня.
+                    </p>
+                    <p>
+                        Помечайте те строки которые должны быть выделены на странице.
+                    </p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Учебный проект студента гр. ИП-122 Гребнева Павла</p>
+    </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 </html>
