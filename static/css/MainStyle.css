@@ -22,7 +22,7 @@ body {
 
 header, main, footer {
     margin: 0; 
-    padding: 0; 
+    padding: 0;
 }
 header {
     background-color: #333;
@@ -111,4 +111,13 @@ footer {
     padding: 10px 0;
     background-color: #333;
     color: #fff;
+}
+
+
+#object {
+  transition: transform 0.1s ease;
+  /* optional */
+  padding: 20px;
+  /* example content */
+  font: bold 20vw sans-serif;
 }
