@@ -1,0 +1,132 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.con {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 0; 
+}
+
+header, main, footer {
+    margin: 0; 
+    padding: 0; 
+}
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0 1px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0.5%;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+.btn {
+	transition: .3s;
+}
+nav .btn:hover {
+	transform: translateY(-3.5px);
+	box-shadow: 0 0px 30px rgba(255, 255, 255, .1);
+}
+
+nav ul li a {
+    color: #000000;
+    text-decoration: none;
+	box-sizing: border-box;
+}
+
+.login-button {
+    margin-left: 1%;
+	margin-right: 2%;
+}
+
+.navbtn {
+    color: #000000;
+}
+
+
+main {
+    flex: 1; /* Это свойство позволяет растянуть main на оставшуюся высоту */
+    padding: 20px;
+}
+.tab {
+	display: none;
+}
+.active_tab {
+	display: block;
+}
+
+.intro {
+	text-align: center;
+}
+.navEduMaterial {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 20px;
+}
+.editEduMaterial {
+	display: flex;
+	flex-direction: row;
+	padding-bottom: 10px;
+}
+.editEduMaterial div {
+	margin-left: 20px;
+	text-align: left;
+}
+.editEduMaterial h1 {
+	font-size: 30px;
+	font-weight: 530;
+}
+
+.bodyItem{
+	margin: 20px;
+	
+}
+.accordion-body {
+	display: flex;
+	flex-direction: row;
+}
+.jump-shake {
+    animation: jump-shaking 0.83s 1;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+}
+@keyframes jump-shaking {
+  0% { transform: translateX(0); background-color: #dc3545}
+  25% { transform: translateY(-9px); background-color: #dc3545 }
+  35% { transform: translateY(-9px) rotate(5deg); background-color: #dc3545 }
+  55% { transform: translateY(-9px) rotate(-5deg); background-color: #dc3545 }
+  65% { transform: translateY(-9px) rotate(5deg); background-color: #dc3545 }
+  75% { transform: translateY(-9px) rotate(-5deg); background-color: #dc3545 }
+  100% { transform: translateY(0) rotate(0); background-color: #dc3545 }
+}
