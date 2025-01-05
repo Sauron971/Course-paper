@@ -1,4 +1,4 @@
-}* {
+* {
     box-sizing: border-box;
 }
 
@@ -9,7 +9,8 @@ html, body {
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #1b2838;
+	color: #c0c5c3;
 }
 
 .con {
@@ -25,7 +26,7 @@ header, main, footer {
     padding: 0; 
 }
 header {
-    background-color: #333;
+    background-color: #171d25;
     color: #fff;
     padding: 10px 0 1px;
 }
@@ -48,12 +49,17 @@ nav ul li {
 }
 .btn {
 	transition: .3s;
+	color: #95c8e7;
+	background: linear-gradient(#225b7a, #164058);
 }
 .btn:hover {
-	transform: translateY(-3.5px);
+	background: linear-gradient(#66c0f4, #2f89bc);
+	color: #95c8e7;
 	box-shadow: 0 0px 30px rgba(255, 255, 255, .1);
 }
-
+.btn-light {
+	--bs-btn-border-color: linear-gradient(#66c0f4, #2f89bc);
+}
 
 nav ul li a {
     color: #000000;
@@ -67,12 +73,8 @@ nav ul li a {
 }
 
 .navbtn {
-    color: #000000;
+    color: #95c8e7;
 }
-.act {
-	transform: translateY(-5.5px);
-}
-
 
 main {
     flex: 1; /* Это свойство позволяет растянуть main на оставшуюся высоту */
@@ -96,6 +98,7 @@ main {
 .Ue5logo {
     max-width: 300px;
     height: auto;
+	filter: drop-shadow(4px 4px 10px #225b7a);
 }
 .practicate {
 	margin: 25vh;
@@ -113,24 +116,34 @@ main {
 
 
 
+.accordion {
+	--bs-accordion-border-color: #353a40;
+	--bs-accordion-inner-border-radius: -1px;
+}
+
 .accordion-button:not(.collapsed) {
-    background-color: #333; /* Замените на нужный цвет */
+    background-color: #353a40; /* Замените на нужный цвет */
     color: white; /* Цвет текста */
 }
   
 .accordion-button {
-  background-color: #f8f9fa; /* Замените на нужный цвет */
-  color: black; /* Цвет текста */
+  background-color: #353a40; /* Замените на нужный цвет */
+  color: #fff; /* Цвет текста */
+  border: none;
 }
 
   /* Дополнительные стили для эффекта при наведении */
 .accordion-button:hover {
-   background-color: #5E5E5E; /* Замените на нужный цвет */
+   background-color: #434c51; /* Замените на нужный цвет */
    color: white; /* Цвет текста при наведении */
+}
+.accordion-body {
+	background-color: #141e29;
+	color: #c1e7ed;
 }
 footer {
     text-align: center;
     padding: 10px 0;
-    background-color: #333;
+    background-color: #000000;
     color: #fff;
 }
