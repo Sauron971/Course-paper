@@ -1,0 +1,152 @@
+}* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.con {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    margin: 0; 
+    padding: 0; 
+}
+
+header, main, footer {
+    margin: 0; 
+    padding: 0; 
+}
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0 1px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0.5%;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+header .btn {
+	transition: .3s;
+}
+header .btn:hover {
+	transform: translateY(-3.5px);
+	box-shadow: 0 0px 30px rgba(255, 255, 255, .1);
+}
+
+
+nav ul li a {
+    color: #000000;
+    text-decoration: none;
+	box-sizing: border-box;
+}
+
+.login-button {
+    margin-left: 1%;
+	margin-right: 2%;
+}
+
+.navbtn {
+    color: #000000;
+}
+.act {
+	transform: translateY(-5.5px);
+}
+.tab {
+	display: none;
+}
+.active_tab {
+	display: block;
+}
+main {
+    flex: 1; /* Это свойство позволяет растянуть main на оставшуюся высоту */
+    padding: 20px;
+}
+
+.intro {
+    text-align: center;
+}
+
+.intro h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.Ue5logo {
+    max-width: 300px;
+    height: auto;
+}
+
+.navTests {
+	display: flex;
+	justify-content: center;
+}
+
+.navTests .navbtn {
+	margin-left: 50px;
+	transition: .3s;
+}
+
+.navTests .navbtn:hover {
+	padding-right: 30px;
+	padding-left: 30px;
+}
+.testsContainer {
+	flex: 1;
+}
+.testContainer {
+	margin-left: 20%;
+	margin-right: 15%;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	border: solid #000;
+	border-width: 1px 1px;
+	border-radius: 10px;
+	padding: 50px;
+}
+
+.testContainer h1 {
+	font-size: 32px;
+	margin-bottom: 20px;
+}
+.testContainer input {
+	margin-left: 10px;
+	margin-right: 4px;
+}
+.answersContainer {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 30px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+}
