@@ -179,11 +179,3 @@ footer {
     background-color: #000;
     color: #fff;
 }
-
-#object {
-  transition: transform 0.1s ease;
-  /* optional */
-  padding: 20px;
-  /* example content */
-  font: bold 20vw sans-serif;
-}
