@@ -11,21 +11,31 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
+.dark-mode {
+    font-family: Arial, sans-serif;
+    background-color: #1b2838;
+	color:#c0c5c3;
+}
 
 .con {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
-    margin: 0; 
-    padding: 0; 
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 header, main, footer {
-    margin: 0; 
-    padding: 0; 
+    margin: 0;
+    padding: 0;
 }
 header {
     background-color: #333;
+    color: #fff;
+    padding: 10px 0 1px;
+}
+.dark-mode header {
+    background-color: #171d25;
     color: #fff;
     padding: 10px 0 1px;
 }
@@ -53,6 +63,21 @@ nav ul li {
 	transform: translateY(-3.5px);
 	box-shadow: 0 0px 30px rgba(255, 255, 255, .1);
 }
+.dark-mode .btn {
+	transition: .3s;
+	color: #95c8e7;
+	background: linear-gradient(#225b7a, #164058);
+}
+.dark-mode .btn:hover {
+    transform: none;
+    box-shadow: none;
+    background: linear-gradient(#66c0f4, #2f89bc);
+    color: #95c8e7;
+    box-shadow: 0 0px 30px rgba(255, 255, 255, .1);
+}
+.dark-mode .btn-light {
+	--bs-btn-border-color: linear-gradient(#66c0f4, #2f89bc);
+}
 
 nav ul li a {
     color: #000000;
@@ -63,13 +88,44 @@ nav ul li a {
 .login-button {
     margin-left: 1%;
 	margin-right: 2%;
+	display: flex;
+	gap: 18px;
+}
+.theme-button {
+    background: #acadad;
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    height: 30px;
+    cursor: pointer;
+}
+
+.theme-button span {
+    background: #f8f9fa;
+    display: block;
+    border-radius: 12px;
+    font-size: 18px;
+    transition: .5s;
+    color: white;
+    transform: translateY(-6px);
+}
+
+.theme-button:active span {
+    transform: translateY(-2px);
+}
+
+.dark-mode .theme-button span {
+    background: linear-gradient(#66c0f4, #2f89bc);
+}
+.dark-mode .theme-button {
+    background: linear-gradient(#225b7a, #164058);
 }
 
 .navbtn {
     color: #000000;
 }
-.act {
-	transform: translateY(-5.5px);
+.dark-mode .navbtn {
+    color: #95c8e7;
 }
 
 main {
@@ -95,6 +151,11 @@ main {
     max-width: 300px;
     height: auto;
 }
+.dark-mode .Ue5logo {
+    max-width: 300px;
+    height: auto;
+	filter: drop-shadow(4px 4px 10px #eee);
+}
 
 .images {
 	margin: auto;
@@ -111,4 +172,18 @@ footer {
     padding: 10px 0;
     background-color: #333;
     color: #fff;
+}
+.dark-mode footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #000;
+    color: #fff;
+}
+
+#object {
+  transition: transform 0.1s ease;
+  /* optional */
+  padding: 20px;
+  /* example content */
+  font: bold 20vw sans-serif;
 }
