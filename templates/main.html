@@ -24,27 +24,32 @@
 			<nav>
 				<ul>
 					<li>
-						<a class="btn btn-light navbtn act" href="/">
+						<a class="btn navbtn btn-light" href="/">
 							🏠Главная
 						</a>
 					</li>
 					<li>
-						<a class="btn btn-light navbtn" href="theory">
+						<a class="btn navbtn btn-light" href="theory">
 							📔Теория
 						</a>
 					</li>
 					<li>
-						<a class="btn btn-light navbtn" href="practicate">
+						<a class="btn navbtn btn-light" href="practicate">
 							💻Практика
 						</a>
 					</li>
 					<li>
-						<a class="btn btn-light navbtn" href="tests">
+						<a class="btn navbtn btn-light" href="tests">
 							📋Тесты
 						</a>
 					</li>
 				</ul>
 				<div class="login-button">
+					<button id="theme-change" class="theme-button">
+						<span id="theme-change-lb">
+							☀️
+						</span>
+					</button>
 					{% if session.username %}
 						<div class="dropdown">
 							<button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -103,5 +108,55 @@
 		</footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script>
+		let currentTheme = 'light';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем текущую тему при загрузке страницы
+            fetch('/change-theme')
+                .then(response => response.json())
+                .then(data => {
+                    currentTheme = data.theme; // Обновляем переменную currentTheme
+                    applyTheme(); // Применяем тему
+                })
+                .catch(error => console.error('Ошибка:', error));
+        });
+
+        document.getElementById('theme-change').addEventListener('click', function() {
+            changeTheme();
+            // Отправляем новую тему на сервер
+            fetch('/change-theme', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ theme: currentTheme }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => console.error('Ошибка:', error));
+        });
+
+        function changeTheme() {
+            if (currentTheme === 'light') {
+                currentTheme = 'dark';
+            } else {
+                currentTheme = 'light';
+            }
+            applyTheme(); // Применяем тему после изменения
+        }
+
+        function applyTheme() {
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-change-lb').innerText = '🌙';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('theme-change-lb').innerText = '☀️';
+            }
+        }
+	</script>
 </body>
 </html>
