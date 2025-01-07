@@ -54,8 +54,8 @@
 			</nav>
 		</header>
         <main>
-            <section class="intro" id="perspective">
-                <img src="../static/images/ue5.webp" alt="UE5" id="object" class="Ue5logo" width="440" height="240">
+            <section class="intro">
+                <img src="../static/images/ue5.webp" alt="UE5" class="Ue5logo" width="440" height="240">
                 <h1>Добро пожаловать в электронный учебник по Unreal Engine 5!</h1>
                 <p>Этот сайт предназначен для изучения разработки игр на Unreal Engine 5 с использованием системы визуального программирования Blueprint. Здесь вы найдете теоретические материалы, практические задания и тесты для проверки ваших знаний.</p>
             </section>
@@ -92,18 +92,6 @@
 			<img src="../static/images/hdmi.png" width="100" alt="" style="margin-left: auto; align-self: flex-end">
 		</footer>
     </div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	<script>
-		document.addEventListener('mousemove', function(e) {
-          var object = document.getElementById('object');
-          var w = window.innerWidth / 2;
-          var h = window.innerHeight / 2;
-
-          var x = (e.pageX - w) / 20;
-          var y = -(e.pageY - h) / 20;
-
-          object.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-        });
-	</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 import hashlib
 import re
 
-from flask import Flask, render_template, request, redirect, url_for, session, abort
+from flask import Flask, render_template, request, redirect, url_for, session, abort, jsonify
 
 from myDb import get_db_connection, createUser
 
@@ -272,6 +272,18 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+@app.route('/change-theme', methods=['POST'])
+def set_theme():
+    data = request.get_json()
+    theme = data.get('theme')
+    session['theme'] = theme
+    return jsonify({'message': 'Тема успешно сохранена!', 'theme': theme}), 200
+
+@app.route('/change-theme', methods=['GET'])
+def get_theme():
+    theme = session.get('theme', 'light')
+    return jsonify({'theme': theme}), 200
 
 
 @app.errorhandler(404)
