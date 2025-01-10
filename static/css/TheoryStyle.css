@@ -1,4 +1,4 @@
-* {
+}* {
     box-sizing: border-box;
 }
 
@@ -12,9 +12,9 @@ body {
     background-color: #f4f4f4;
 }
 .dark-mode {
-    font-family: Arial, sans-serif;
-    background-color: #1b2838;
-	color:#c0c5c3;
+     font-family: Arial, sans-serif;
+     background-color: #1b2838;
+ 	color:#c0c5c3;
 }
 
 .con {
@@ -27,7 +27,7 @@ body {
 
 header, main, footer {
     margin: 0; 
-    padding: 0;
+    padding: 0; 
 }
 header {
     background-color: #333;
@@ -103,7 +103,6 @@ nav ul li a {
 .dark-mode .dropdown-item:hover {
     background-color: #3e444b
 }
-
 .con-theme-change {
     padding-top: 6px;
 }
@@ -136,14 +135,12 @@ nav ul li a {
 .dark-mode .theme-button {
     background: linear-gradient(#225b7a, #164058);
 }
-
 .navbtn {
     color: #000000;
 }
 .dark-mode .navbtn {
     color: #95c8e7;
 }
-
 main {
     flex: 1;
     padding: 20px;
@@ -168,19 +165,61 @@ main {
     height: auto;
 }
 .dark-mode .Ue5logo {
-    max-width: 300px;
-    height: auto;
-	filter: drop-shadow(4px 4px 10px #eee);
+    filter: drop-shadow(4px 4px 10px #eee);
+}
+.theories {
+	margin: 25vh;
+	margin-top: 10px;
 }
 
-.images {
-	margin: auto;
-	margin-bottom: 5%;
-	width: 70%;
+.theories h1 {
+	font-size: 20px;
+	font-weight: 650;
+}
+.theories h2 {
+	font-size: 16px;
+	font-weight: 600;
 }
 
-.d-block, .carousel-inner {
-	border-radius: 32px;
+.accordion-button:not(.collapsed) {
+    background-color: #333;
+    color: white;
+}
+  
+.accordion-button {
+  background-color: #f8f9fa;
+  color: black;
+}
+
+.accordion-button:hover {
+   background-color: #5E5E5E;
+   color: white;
+}
+
+.dark-mode .accordion {
+	--bs-accordion-border-color: #353a40;
+	--bs-accordion-inner-border-radius: -1px;
+}
+
+.dark-mode .accordion-button:not(.collapsed) {
+    background-color: #353a40;
+    color: white;
+}
+
+.dark-mode .accordion-button {
+  background-color: #353a40;
+  color: #fff;
+  border: none;
+}
+
+.dark-mode .accordion-button:hover {
+   background-color: #434c51;
+   color: white;
+}
+
+.dark-mode .accordion-body {
+	background-color: #141e29;
+	color: #c1e7ed;
 }
 
 footer {
@@ -190,8 +229,5 @@ footer {
     color: #fff;
 }
 .dark-mode footer {
-    text-align: center;
-    padding: 10px 0;
     background-color: #000;
-    color: #fff;
 }
