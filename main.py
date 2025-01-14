@@ -212,6 +212,13 @@ def admin_panel():
                              (newpassword, admin, login,)).fetchone()
             conn.commit()
             conn.close()
+        elif action == 'delete_user':
+            login = request.form.get('login')
+            conn = get_db_connection()
+            conn.execute('DELETE FROM users WHERE username = ?', (login,)).fetchone()
+            conn.commit()
+            conn.close()
+            print("Удалет юзер " + login)
         elif action == 'create_user':
             login = request.form.get('newLogin')
             password = request.form.get('newPassword')
@@ -293,4 +300,4 @@ def not_found(e):
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.1.34', port=80)
+    app.run(debug=True)
