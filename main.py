@@ -129,6 +129,8 @@ def get_users():
         users.append(user_data)
 
     return users
+
+
 # endregion
 
 
@@ -182,7 +184,6 @@ def tests():
                 correct_answer = component['correct_answer']
                 user_answer = user_answers.get(f'answer_{question_number}')
                 count_questions += 1
-                print(f"{user_answer} == {correct_answer}")
                 if user_answer == correct_answer:
                     score += 1
             score = (score / count_questions) * 100
@@ -190,6 +191,20 @@ def tests():
             return render_template('tests.html', test=tab, score=score, test1=test1, test2=test2, test3=test3)
 
     return render_template('tests.html', test=tab, test1=test1, test2=test2, test3=test3)
+
+
+@app.route('/getTest', methods=["GET", "POST"])
+def check_availability_test():
+    index_test = request.args.get("index", "")
+    if session.get('admin'):
+        return jsonify({'status': 'success', 'redirect': f'tests?test={index_test}'})
+    c = get_db_connection()
+    test_availability = c.execute('SELECT availability FROM tests WHERE id = ?', (index_test,)).fetchone()
+    c.close()
+
+    if bool(test_availability['availability']):
+        return jsonify({'status': 'success', 'redirect': f'tests?test={index_test}'})
+    return jsonify({'status': 'error', 'message': 'Похоже учитель еще не открыл доступ к этому тесту.'})
 
 
 @app.route('/admin', methods=["GET", "POST"])
@@ -218,7 +233,6 @@ def admin_panel():
             conn.execute('DELETE FROM users WHERE username = ?', (login,)).fetchone()
             conn.commit()
             conn.close()
-            print("Удалет юзер " + login)
         elif action == 'create_user':
             login = request.form.get('newLogin')
             password = request.form.get('newPassword')
@@ -280,12 +294,14 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+
 @app.route('/change-theme', methods=['POST'])
 def set_theme():
     data = request.get_json()
     theme = data.get('theme')
     session['theme'] = theme
     return jsonify({'message': 'Тема успешно сохранена!', 'theme': theme}), 200
+
 
 @app.route('/change-theme', methods=['GET'])
 def get_theme():
@@ -296,6 +312,8 @@ def get_theme():
 @app.errorhandler(404)
 def not_found(e):
     return render_template('404.html'), 404
+
+
 # endregion
 
 

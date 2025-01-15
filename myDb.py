@@ -29,6 +29,10 @@ def createTables():
              username TEXT UNIQUE,
              password TEXT,
              admin BOOLEAN)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS tests (
+             id INTEGER PRIMARY KEY AUTOINCREMENT,
+             name TEXT,
+             availability BOOLEAN) ''')
     conn.commit()
     conn.close()
 get_db_connection()

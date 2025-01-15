@@ -25,6 +25,12 @@ body {
     padding: 0; 
 }
 
+#dialogAvailability {
+    margin:auto;
+    height: 200px;
+    width: 200px;
+    background-color: #eee;
+}
 header, main, footer {
     margin: 0; 
     padding: 0; 
