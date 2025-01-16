@@ -109,7 +109,8 @@
                                                %}checked{% endif %}>
                                     </div>
                                     <button type="submit" class="btn btn-dark">Изменить</button>
-                                    <button type="button" onclick="handleSubmit(event)" class="btn btn-danger">Удалить</button>
+                                    <button type="button" onclick="handleSubmit(event)" class="btn btn-danger">Удалить
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -233,7 +234,9 @@
                         После внесения нужных изменений нажмите на кнопку снизу чтобы сохранить.
                     </p>
                     <p>
-                        <b>Важно:</b> <br>в первой строке сначала идет номер вопроса, а после пробела сам вопрос; <br>ниже этой строки идут варианты ответов разделяемые с помощью символа |; <br>символом * помечается правильный вариант ответа
+                        <b>Важно:</b> <br>в первой строке сначала идет номер вопроса, а после пробела сам вопрос; <br>ниже
+                        этой строки идут варианты ответов разделяемые с помощью символа |; <br>символом * помечается
+                        правильный вариант ответа
                     </p>
                     <p class="border">
                         <b>Пример:</b><br>
@@ -244,6 +247,30 @@
             </div>
             <button type="submit" class="btn btn-success">Сохранить</button>
         </form>
+        <div class="flex-row d-flex shadow bg-body-tertiary rounded w-25 p-4 mt-4 gap-4">
+            <div class="d-flex flex-column">
+                <h4>Доступ к тестам:</h4>
+                <div class="mb-1">
+                    <label for="availabilityTest1">Тест 1:</label>
+                    <input type="checkbox" class="form-check-input" id="availabilityTest1" onchange="changeAvailabilityTest('1')">
+                </div>
+                <div class="mb-1">
+                    <label for="availabilityTest2">Тест 2:</label>
+                    <input type="checkbox" class="form-check-input" id="availabilityTest2" onchange="changeAvailabilityTest('2')">
+                </div>
+                <div class="mb-1">
+                    <label for="availabilityTest3">Тест 3:</label>
+                    <input type="checkbox" class="form-check-input" id="availabilityTest3" onchange="changeAvailabilityTest('3')">
+                </div>
+            </div>
+            <div class="d-flex h-auto">
+                <div class="vr"></div>
+            </div>
+            <div>
+                <h5>Описание:</h5>
+                <p>Здесь можно отметить существующие<br> тесты на их доступность<br>для учеников.</p>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -266,6 +293,39 @@
         // Отправляем форму
         form.submit();
     }
+    function loadTestAvailability() {
+            fetch('/getTestAvailability')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('availabilityTest1').checked = data.test1 === 1;
+                    document.getElementById('availabilityTest2').checked = data.test2 === 1;
+                    document.getElementById('availabilityTest3').checked = data.test3 === 1;
+                })
+                .catch((error) => {
+                    console.error('Ошибка:', error);
+                });
+    }
+    window.onload = function() {
+            loadTestAvailability();
+    };
+        function changeAvailabilityTest(index) {
+            fetch('/changeAvailabilityTest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(index)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadTestAvailability();
+                }
+            })
+            .catch((error) => {
+                console.error('Ошибка:', error);
+            });
+        }
 </script>
 </body>
 </html>

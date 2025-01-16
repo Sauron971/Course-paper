@@ -164,11 +164,15 @@ def practicate():
 @app.route('/tests', methods=["GET", "POST"])
 def tests():
     tab = request.args.get('test', '')
+    check = get_test_availability().get_json()
+    if check.get('test'+tab) == 0:
+        return redirect('/tests')
+
     test1 = get_questions_as_components(read_file(get_path_edu_material(2, 1)))
     test2 = get_questions_as_components(read_file(get_path_edu_material(2, 2)))
     test3 = get_questions_as_components(read_file(get_path_edu_material(2, 3)))
     if request.method == 'POST':
-        user_answers = request.form  # Получаем данные формы в словаре
+        user_answers = request.form
         score = 0
         count_questions = 0
         current_test = -1
@@ -201,11 +205,32 @@ def check_availability_test():
     c = get_db_connection()
     test_availability = c.execute('SELECT availability FROM tests WHERE id = ?', (index_test,)).fetchone()
     c.close()
-
     if bool(test_availability['availability']):
         return jsonify({'status': 'success', 'redirect': f'tests?test={index_test}'})
     return jsonify({'status': 'error', 'message': 'Похоже учитель еще не открыл доступ к этому тесту.'})
 
+
+@app.route('/getTestAvailability', methods=["GET", "POST"])
+def get_test_availability():
+    c = get_db_connection()
+    tests = c.execute("SELECT * FROM tests").fetchall()
+    return jsonify(
+        {'test1': tests[0]['availability'], 'test2': tests[1]['availability'], 'test3': tests[2]['availability']})
+
+
+@app.route('/changeAvailabilityTest', methods=["GET", "POST"])
+def change_test_availability():
+    i = request.get_json()
+    c = get_db_connection()
+    now_availability = c.execute("SELECT availability FROM tests WHERE id = ?", (i,)).fetchone()
+    if now_availability["availability"] == 1:
+        now_availability = 0
+    else:
+        now_availability = 1
+    c.execute("UPDATE tests SET availability = ? WHERE id = ?", (now_availability, i,))
+    c.commit()
+    c.close()
+    return jsonify('success')
 
 @app.route('/admin', methods=["GET", "POST"])
 def admin_panel():

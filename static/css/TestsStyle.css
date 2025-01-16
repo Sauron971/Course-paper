@@ -25,11 +25,8 @@ body {
     padding: 0; 
 }
 
-#dialogAvailability {
-    margin:auto;
-    height: 200px;
-    width: 200px;
-    background-color: #eee;
+.dark-mode .modal-content {
+    background-color: #1b2838;
 }
 header, main, footer {
     margin: 0; 
