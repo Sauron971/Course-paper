@@ -165,7 +165,7 @@ def practicate():
 def tests():
     tab = request.args.get('test', '')
     check = get_test_availability().get_json()
-    if check.get('test'+tab) == 0:
+    if check.get('test'+tab) == 0 and not session.get('admin'):
         return redirect('/tests')
 
     test1 = get_questions_as_components(read_file(get_path_edu_material(2, 1)))
