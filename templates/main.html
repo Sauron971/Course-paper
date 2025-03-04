@@ -95,11 +95,28 @@
 			</button>
 			</div>
 		</section>
-		<footer style="display: flex; align-items: center; justify-content: center; gap: 20px;" class="">
-			<p style="text-align:center; flex-grow: 1;">© 2024 Учебный проект студента гр. ИП-122 Гребнева Павла</p>
-			<img src="../static/images/hdmi.png" width="100" alt="" style="margin-left: auto; align-self: flex-end">
+		<footer>
+			<div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+				<p style="text-align:center; flex-grow: 1;">© 2024 Учебный проект студента гр. ИП-122 Гребнева
+				Павла</p>
+				<button class="btn-references" onclick="toggleReferences()">Справка</button>
+			</div>
+			<div style="display:none;" id="references">
+				Материалы взяты с сайта https://perevodvsem.ru/ и переведены в текст вручную.
+				Курс: [Udemy] Unreal Engine Blueprints - The Ultimate Developer Course Part 1 [ENG-RUS]
+			</div>
 		</footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script>
+		function toggleReferences() {
+			const referencesDiv = document.getElementById('references');
+			if (referencesDiv.style.display === 'none' || referencesDiv.style.display === '') {
+				referencesDiv.style.display = 'block';
+			} else {
+				referencesDiv.style.display = 'none';
+			}
+		}
+	</script>
 </body>
 </html>

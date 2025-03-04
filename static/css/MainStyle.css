@@ -33,6 +33,9 @@ header {
     background-color: #333;
     color: #fff;
     padding: 10px 0 1px;
+	position: fixed; 
+	width: 100%; 
+	z-index: 100;
 }
 .dark-mode header {
     background-color: #171d25;
@@ -147,6 +150,7 @@ nav ul li a {
 main {
     flex: 1;
     padding: 20px;
+	margin-top: 80px;
 }
 
 .intro {
@@ -188,10 +192,25 @@ footer {
     padding: 10px 0;
     background-color: #333;
     color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 .dark-mode footer {
     text-align: center;
     padding: 10px 0;
     background-color: #000;
     color: #fff;
+}
+footer .btn-references {
+    padding: 5px;
+    margin-right: 15px;
+    background:none;
+    color: #fff;
+    border: 1px solid gray;
+}
+footer #references {
+    width: 600px;
+    height: 100px;
+    text-align: right;
+    margin-left: auto;
 }
